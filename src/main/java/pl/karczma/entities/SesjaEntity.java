@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -31,7 +32,7 @@ public class SesjaEntity {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private UzytkownikEntity mg;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy="sesje")
 	private Collection<UzytkownikEntity> gracze = new ArrayList<UzytkownikEntity>();
 
 	public int getId() {

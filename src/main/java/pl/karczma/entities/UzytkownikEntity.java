@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,16 +26,16 @@ public class UzytkownikEntity {
 	private String email;
 	@Column(nullable = false)
 	private String status;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "uzytkownik_sesja", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "id_sesja") })
-	private Collection<SesjaEntity> sesja = new ArrayList<SesjaEntity>();
+	private Collection<SesjaEntity> sesje = new ArrayList<SesjaEntity>();
 
-	public Collection<SesjaEntity> getSesja() {
-		return sesja;
+	public Collection<SesjaEntity> getSesje() {
+		return sesje;
 	}
 
-	public void setSesja(Collection<SesjaEntity> sesja) {
-		this.sesja = sesja;
+	public void setSesje(Collection<SesjaEntity> sesje) {
+		this.sesje = sesje;
 	}
 
 	public int getId() {

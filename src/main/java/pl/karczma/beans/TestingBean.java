@@ -41,14 +41,63 @@ public class TestingBean {
 		sesja1.setOpis("To jest sesja Konia");
 		sesja1.setSystem("SW");
 		sesja1.setMg(user2);
-
-		sesja1.getGracze().add(user1);
-		sesja1.getGracze().add(user2);
+		
+		SesjaEntity sesja2 = new SesjaEntity();
+		sesja2.setData(new Date());
+		sesja2.setName("Sesja Chuja");
+		sesja2.setOpis("To jest sesja Chuja");
+		sesja2.setSystem("WH");
+		sesja2.setMg(user2);
+		
 		
 		session.save(user1);
 		session.save(user2);
 		session.save(sesja1);
+		session.save(sesja2);
+		
+		UzytkownikEntity ue1 = new UzytkownikEntity();
+		ue1 = (UzytkownikEntity) session.get(UzytkownikEntity.class, 1);
+		ue1.getSesje().add(sesja1);
+		ue1.getSesje().add(sesja2);
+		
+		UzytkownikEntity ue2 = new UzytkownikEntity();
+		ue2 = (UzytkownikEntity) session.get(UzytkownikEntity.class, 2);
+		ue2.getSesje().add(sesja1);
+		ue2.getSesje().add(sesja2);
+		
+		session.save(ue1);
+		session.save(ue2);
+		//session.save(sesja1);
 		
 		session.getTransaction().commit();
+		System.out.println("--- end b1 test ---");
+		
+	}
+	
+	public void basicTest2() {
+
+		System.out.println("----b2 test----");
+		
+		Session session = HibernateFactory.getSessionFactory()
+				.getCurrentSession();
+		session.beginTransaction();
+		
+		UzytkownikEntity userZapisany = new UzytkownikEntity();
+		userZapisany = (UzytkownikEntity) session.get(UzytkownikEntity.class, 1);
+		
+		SesjaEntity sesjaZapisana = new SesjaEntity();
+		sesjaZapisana = (SesjaEntity) session.get(SesjaEntity.class, 1);
+		
+		session.getTransaction().commit();
+		
+		System.out.println("------------------------------------");
+		System.out.println(userZapisany.getSesje().size());
+		System.out.println(sesjaZapisana.getGracze().size());
+		
+		
+	}
+	
+	public void oszustwo() {
+		
 	}
 }
