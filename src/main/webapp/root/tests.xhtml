@@ -4,11 +4,22 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Karczma - Strona Logowania</title>
+	<title>Karczma - Testy</title>
 </h:head>
 <h:body>
 	<h:outputStylesheet name="webjars/bootstrap/3.0.0/css/bootstrap.min.css"></h:outputStylesheet>
 	<h:outputScript name="webjars/bootstrap/3.0.0/js/bootstrap.min.js"></h:outputScript>
-
+	<h:form>
+	<h:commandButton styleClass="btn btn-primary" value="test" action="#{testingBean.basicTest}"></h:commandButton>
+	</h:form>
+	
+	<h:form>
+	<h:commandButton styleClass="btn btn-primary" value="test2" action="#{testingBean.basicTest2}"></h:commandButton>
+	</h:form>
+	
+	<h:form>
+	<h:inputText value="#{zalogowanyUzytkownikBean.email}" />
+	<h:commandButton styleClass="btn btn-primary" value="gototest" action="test"></h:commandButton>
+	</h:form>
 </h:body>
 </html>
