@@ -16,7 +16,7 @@
  
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>faces/root/tests.xhtml</welcome-file>
+		<welcome-file>faces/root/loginPage.xhtml</welcome-file>
 	</welcome-file-list>
  
 	<!-- JSF mapping -->

@@ -9,6 +9,33 @@
 <h:body>
 	<h:outputStylesheet name="webjars/bootstrap/3.0.0/css/bootstrap.min.css"></h:outputStylesheet>
 	<h:outputScript name="webjars/bootstrap/3.0.0/js/bootstrap.min.js"></h:outputScript>
+	<h:outputStylesheet library="css" name="loginPage.css"></h:outputStylesheet>
+	
+	<h:panelGroup layout="block" id="content"> 
+		<h:form name="formularz" styleClass="form-horizontal" id="form">
+		
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel for="inputEmail" styleClass="col-lg-2 control-label">Email:</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="col-lg-6">
+					<h:inputText styleClass="form-control inputs" id="inputEmail"></h:inputText>
+				</h:panelGroup>
+			</h:panelGroup>
 
+			<h:panelGroup layout="block" class="form-group">
+				<h:outputLabel for="inputPass" styleClass="col-lg-2 control-label">Password:</h:outputLabel>
+				<h:panelGroup layout="block" styleClass="col-lg-6">
+					<h:inputSecret styleClass="form-control inputs" id="inputPass"></h:inputSecret>
+				</h:panelGroup>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" styleClass="form-horizontal log">
+				<h:commandButton styleClass="btn btn-primary btn-block" value="Login"></h:commandButton>
+				<h:outputLink value="" class="fontLog">
+					ZAŁÓŻ KONTO
+				</h:outputLink>
+			</h:panelGroup>
+
+		</h:form>
+	</h:panelGroup>
 </h:body>
 </html>
