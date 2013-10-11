@@ -17,22 +17,22 @@
 			<h:panelGroup layout="block" styleClass="form-group">
 				<h:outputLabel for="inputEmail" styleClass="col-lg-2 control-label">Email:</h:outputLabel>
 				<h:panelGroup layout="block" styleClass="col-lg-6">
-					<h:inputText styleClass="form-control inputs" id="inputEmail"></h:inputText>
+					<h:inputText styleClass="form-control inputs" id="inputEmail" value="#{userAuthBean.email}"></h:inputText>
 				</h:panelGroup>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" class="form-group">
 				<h:outputLabel for="inputPass" styleClass="col-lg-2 control-label">Password:</h:outputLabel>
 				<h:panelGroup layout="block" styleClass="col-lg-6">
-					<h:inputSecret styleClass="form-control inputs" id="inputPass"></h:inputSecret>
+					<h:inputSecret styleClass="form-control inputs" id="inputPass" value="#{userAuthBean.haslo}"></h:inputSecret>
 				</h:panelGroup>
 			</h:panelGroup>
 			
 			<h:panelGroup layout="block" styleClass="form-horizontal log">
-				<h:commandButton styleClass="btn btn-primary btn-block" value="Login"></h:commandButton>
-				<h:outputLink value="" class="fontLog">
+				<h:commandButton styleClass="btn btn-primary btn-block" value="Login" action="#{userAuthBean.login}"></h:commandButton>
+				<h:commandLink value="" class="fontLog" action="registerPage">
 					ZAŁÓŻ KONTO
-				</h:outputLink>
+				</h:commandLink>
 			</h:panelGroup>
 
 		</h:form>

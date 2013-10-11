@@ -7,10 +7,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIViewRoot;
-//import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+//import javax.faces.component.UIViewRoot;
+
+import pl.karczma.dao.UzytkownikManager;
+import pl.karczma.entities.UserAuthEntity;
+import pl.karczma.entities.UzytkownikEntity;
 
 @ManagedBean(name = "userAuthBean")
 @RequestScoped
@@ -57,7 +61,8 @@ public class UserAuthBean implements Serializable {
 		// Jezeli jakims sposobem autoryzacja zostalaby wywolana na stronie
 		// logowania
 		// - przerwij autoryzacje i pozostan na stronie logowania
-		if (uiViewRoot.getViewId().equals("/root/loginPage.xhtml"))
+		if (uiViewRoot.getViewId().equals("/root/loginPage.xhtml") ||
+				uiViewRoot.getViewId().equals("/root/registerPage.xhtml"))
 			return;
 
 		// try dla sprawdzenia czy zalogowany uzytkownik w ogole istnieje
@@ -74,8 +79,8 @@ public class UserAuthBean implements Serializable {
 				navHandler
 						.performNavigation("/root/loginPage?faces-redirect=true");
 			}
-		// W przypadku gdy zalogowany uzytkownik nie istnieje w ogole -
-		// przenies na strone logowania
+			// W przypadku gdy zalogowany uzytkownik nie istnieje w ogole -
+			// przenies na strone logowania
 		} catch (java.lang.NullPointerException nullPointerException) {
 			ConfigurableNavigationHandler navHandler = (ConfigurableNavigationHandler) context
 					.getApplication().getNavigationHandler();
@@ -99,4 +104,51 @@ public class UserAuthBean implements Serializable {
 				.getApplication().getNavigationHandler();
 		navHandler.performNavigation("/root/loginPage?faces-redirect=true");
 	}
+
+	public void login() {
+
+		//Przygotuj navigation handler dla ewentualnego przeniesienia do dashboardu
+		FacesContext context = FacesContext.getCurrentInstance();
+		ConfigurableNavigationHandler navHandler = (ConfigurableNavigationHandler) context
+				.getApplication().getNavigationHandler();
+		
+		//Pobierz obiekt autoryzacji dla danego adresu email
+		UzytkownikManager uzytkownikManager = new UzytkownikManager();
+		UserAuthEntity ueAuth = uzytkownikManager.getAuthenticationObject(this.email);
+		
+		//Sprawdz czy zostal pobrany uzytkownik. Brak pobranego uzytkownika oznacza przekazanie
+		//nieistniejacego adresu email. Przekieruj do strony logowania w takim wypadku
+		try {
+			ueAuth.getEmail();
+		} catch(java.lang.NullPointerException nullPointerException) {
+			//Instrukcje obslugujace bledny adres email
+			navHandler.performNavigation("/root/loginPage?faces-redirect=true");
+			//Przerwij procedure logowania
+			return;
+		}
+		
+		//Sprawdz zgodnosc hasel
+		if(this.haslo.equals(ueAuth.getHaslo())) {
+			//Haslo poprawne, ustaw dane zalogowanego uzytkownika i przejdz do dash'a
+			zalogowanyUzytkownik.setEmail(this.email);
+			navHandler.performNavigation("dashboard");
+		} else {
+			//Instrukcje w przypadku niepowodzenia logowania
+		}
+	}
+	
+	public void registerNewUser() {
+		
+		//Przygotuj nowego uzytkownika o emailu podanym w stronie jsf oraz statusie gracza
+		UzytkownikEntity newUser = new UzytkownikEntity();
+		newUser.setEmail(this.email);
+		newUser.setStatus("Gracz");
+		
+		UzytkownikManager uzytkownikManager = new UzytkownikManager();
+		
+		//Dodaj uzytkownika do bazy oraz utworz dla niego obiekt autoryzacji
+		uzytkownikManager.saveUserAuth(this.email, this.haslo);
+		uzytkownikManager.save(newUser);
+	}
+	
 }

@@ -18,6 +18,15 @@ public class ZalogowanyUzytkownikBean implements Serializable {
 	private String email;
 	private String status;
 
+	public ZalogowanyUzytkownikBean() {
+		/*this.id = 0;
+		this.nick = "";
+		this.imie = "";
+		this.nazwisko = "";
+		this.email = "quik";
+		this.status = "";*/
+	}
+	
 	public int getId() {
 		return id;
 	}
