@@ -26,3 +26,7 @@ i pod kątem takich ustawień kod był testowany.
 
 Translation will be delivered later (probably when polish version will
 work with all planned funcionality).
+
+==============
+
+Readme updated 11.X.13
