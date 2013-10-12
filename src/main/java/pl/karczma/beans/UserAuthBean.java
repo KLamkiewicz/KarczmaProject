@@ -15,6 +15,7 @@ import javax.faces.event.ComponentSystemEvent;
 import pl.karczma.dao.UzytkownikManager;
 import pl.karczma.entities.UserAuthEntity;
 import pl.karczma.entities.UzytkownikEntity;
+import pl.karczma.utils.PasswordHashingUtils;
 
 @ManagedBean(name = "userAuthBean")
 @RequestScoped
@@ -127,8 +128,13 @@ public class UserAuthBean implements Serializable {
 			return;
 		}
 		
+		//Przehashuj wpisane haslo i wyzeruj haslo w beanie
+		PasswordHashingUtils phu = new PasswordHashingUtils();
+		String passHash = phu.hashAndReturn(haslo);
+		this.haslo = "";
+		
 		//Sprawdz zgodnosc hasel
-		if(this.haslo.equals(ueAuth.getHaslo())) {
+		if(passHash.equals(ueAuth.getHaslo())) {
 			//Haslo poprawne, ustaw dane zalogowanego uzytkownika i przejdz do dash'a
 			zalogowanyUzytkownik.setEmail(this.email);
 			navHandler.performNavigation("dashboard");
@@ -145,9 +151,10 @@ public class UserAuthBean implements Serializable {
 		newUser.setStatus("Gracz");
 		
 		UzytkownikManager uzytkownikManager = new UzytkownikManager();
+		PasswordHashingUtils phu = new PasswordHashingUtils();
 		
 		//Dodaj uzytkownika do bazy oraz utworz dla niego obiekt autoryzacji
-		uzytkownikManager.saveUserAuth(this.email, this.haslo);
+		uzytkownikManager.saveUserAuth(this.email, phu.hashAndReturn(haslo));
 		uzytkownikManager.save(newUser);
 	}
 	
