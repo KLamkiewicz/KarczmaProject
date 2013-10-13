@@ -29,11 +29,11 @@ label {
 }
 
 .log {
-	width: 90px;
+ 	width: 90px; 
 	float: right;
 	margin-right: 145px;
 }
 
 .fontLog {
-	font-size: 14px;
+	font-size: 14px; 
 }
