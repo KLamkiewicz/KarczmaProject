@@ -19,7 +19,7 @@ Dodatkowo należy zmapować wykorzystywane klasy encyjne:
 <mapping class="pl.karczma.entities.UserAuthEntity"/>
 ```
   
-Baza domyślnie wykorzystuje mySQL i działa na dialecie: org.hibernate.dialect.MySQL5InnoDBDialect
+Baza domyślnie wykorzystuje mySQL i działa na dialekcie: org.hibernate.dialect.MySQL5InnoDBDialect
 i pod kątem takich ustawień kod był testowany.
 
 ==============
